@@ -1,0 +1,13 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+
+  div
+    p ID #{ tokenID } = RANK #{ rank }
+
+  form(action='/',method='post')
+    label(for='tokenID') PK ID
+      input(id='tokenID',type='text',value='',placeholder='tokenID',name='tokenID')
+    input(type='submit',value='Get Rank')
