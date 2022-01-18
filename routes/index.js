@@ -1,9 +1,13 @@
 var express = require('express');
 var router = express.Router();
 
-import neatCsv from 'neat-csv';
-import fs from 'fs'
-import path from 'path'
+//import neatCsv from 'neat-csv';
+//import fs from 'fs'
+//import path from 'path'
+
+var neatCsv = require('neat-csv');
+var fs = require('fs');
+var path = require('path');
 
 const csv = './psychokitties.csv'
 var items
