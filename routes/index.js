@@ -1,17 +1,42 @@
 var express = require('express');
 var router = express.Router();
 
+import neatCsv from 'neat-csv';
+import fs from 'fs'
+import path from 'path'
+
+const csv = './psychokitties.csv'
+var items
+
+main();
+
+async function main() {
+  var data = fs.readFileSync(csv)
+	items = await neatCsv( data )
+}
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'PK RANK' });
 });
 
-router.post('/', function(req,res){
+router.post('/', function(req,res) {
   console.log(req.body);
+
+  var id = req.body.tokenID;
+
+  console.log( id )
+	const item = items.find( el => {
+		//console.log( el )
+		return ( el.ID == id )
+	})
+	console.log( item );
+
   res.render('index', { 
     title: 'PK RANK', 
-    tokenID: `${req.body.tokenID}`, 
-    rank: 'RANKBOH'
+    tokenID: `${ item.ID }`, 
+    rank: `${ item.Rank }`,
+    score: `${ item.Score }`
   });
 })
 
