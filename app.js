@@ -19,6 +19,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(function(error, req, res, next) {
+  console.log( req.baseUrl );
+  next;
+});
+
 app.use( `/${ process.env.PATH }`, indexRouter);
 //app.use('/pkrank/users', usersRouter);
 
