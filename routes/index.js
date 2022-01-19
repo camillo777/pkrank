@@ -31,6 +31,11 @@ router.post( `/${ process.env.BASE_URL }`, post)
 //router.post( `/pkrank`, post);
 
 function get(req,res,next) {
+  res.setHeader('Surrogate-Control', 'no-store'); 
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate'); 
+  res.setHeader('Pragma', 'no-cache'); 
+  res.setHeader('Expires', '0');
+  
   res.render('index', { 
     title: 'PK RANK',
     baseUrl: process.env.BASE_URL 
@@ -47,6 +52,11 @@ function post(req,res) {
 		return ( el.ID == id )
 	})
 	console.log( item );
+
+  res.setHeader('Surrogate-Control', 'no-store'); 
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate'); 
+  res.setHeader('Pragma', 'no-cache'); 
+  res.setHeader('Expires', '0');
 
   res.render('index', { 
     title: 'PK RANK', 
