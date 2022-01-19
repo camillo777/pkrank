@@ -4,13 +4,10 @@ block content
   h1= title
   p Welcome to #{title}
 
-  div
-    p ID: #{ tokenID } = RANK: #{ rank } (SCORE: #{ score })
-
   article
     header #{ tokenID }
     p RANK: #{ rank }
-    footer SCORE: #{ score }
+    p SCORE: #{ score }
 
   form(action='/#{ baseUrl }',method='post')
     label(for='tokenID') PK ID
