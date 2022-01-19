@@ -21,14 +21,15 @@ async function main() {
 }
 
 /* GET home page. */
-router.get( `/${ process.env.PATH }`, function(req, res, next) {
-  res.render('index', { title: 'PK RANK' });
-});
-router.get( `/pkrank`, function(req, res, next) {
-  res.render('index', { title: 'PK RANK' });
-});
+router.get( `/${ process.env.PATH }`, get);
+router.get( `/pkrank`, get);
+router.post( `/${ process.env.PATH }`, post)
+router.post( `/pkrank`, post);
 
-router.post( `/${ process.env.PATH }`, function(req,res) {
+function get(req,res,next) {
+  res.render('index', { title: 'PK RANK' });
+}
+function post(req,res) {
   console.log(req.body);
 
   var id = req.body.tokenID;
@@ -46,6 +47,6 @@ router.post( `/${ process.env.PATH }`, function(req,res) {
     rank: `${ item.Rank }`,
     score: `${ item.Score }`
   });
-})
+} 
 
 module.exports = router;
