@@ -21,11 +21,11 @@ async function main() {
 }
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get( `/${ process.env.PATH }`, function(req, res, next) {
   res.render('index', { title: 'PK RANK' });
 });
 
-router.post('/', function(req,res) {
+router.post( `/${ process.env.PATH }`, function(req,res) {
   console.log(req.body);
 
   var id = req.body.tokenID;
