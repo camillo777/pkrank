@@ -49,7 +49,8 @@ function post(req,res) {
     title: 'PK RANK', 
     tokenID: `${ item.ID }`, 
     rank: `${ item.Rank }`,
-    score: `${ item.Score }`
+    score: `${ item.Score }`,
+    baseUrl: process.env.BASE_URL
   });
 } 
 

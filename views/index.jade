@@ -7,7 +7,7 @@ block content
   div
     p ID: #{ tokenID } = RANK: #{ rank } (SCORE: #{ score })
 
-  form(action='/pkrank',method='post')
+  form(action='/#{ baseUrl }',method='post')
     label(for='tokenID') PK ID
       input(id='tokenID',type='text',value='',placeholder='tokenID',name='tokenID')
     input(type='submit',value='Get Rank')
