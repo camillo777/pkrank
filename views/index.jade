@@ -8,6 +8,6 @@ block content
     p ID: #{ tokenID } = RANK: #{ rank } (SCORE: #{ score })
 
   form(action='/#{ baseUrl }',method='post')
-    label(for='tokenID',role='button') PK ID
-      input(id='tokenID',type='text',value='',placeholder='tokenID',name='tokenID')
+    label(for='tokenID') PK ID
+      input(id='tokenID',type='text',value='',placeholder='tokenID',name='tokenID',role='button')
       input(type='submit',value='Get Rank',role='button')
