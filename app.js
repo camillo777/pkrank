@@ -20,7 +20,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use((req, res, next) => {
-  console.log( 'TEST', req );
+  console.log( 'req.baseUrl', req.baseUrl );
   next();
 });
 

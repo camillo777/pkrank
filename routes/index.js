@@ -20,6 +20,8 @@ async function main() {
   console.log( `Read ${ items.length } items` );
 }
 
+console.log( 'process.env.PATH', process.env.PATH );
+
 /* GET home page. */
 router.get( `/${ process.env.PATH }`, get);
 router.get( `/pkrank`, get);
