@@ -22,12 +22,12 @@ async function main() {
   console.log( `Read ${ items.length } items` );
 }
 
-console.log( 'process.env.PATH', process.env.PATH );
+console.log( 'process.env.BASE_URL', process.env.BASE_URL );
 
 /* GET home page. */
-router.get( `/${ process.env.PATH }`, get);
+router.get( `/${ process.env.BASE_URL }`, get);
 router.get( `/pkrank`, get);
-router.post( `/${ process.env.PATH }`, post)
+router.post( `/${ process.env.BASE_URL }`, post)
 router.post( `/pkrank`, post);
 
 function get(req,res,next) {
