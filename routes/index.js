@@ -17,6 +17,7 @@ main();
 async function main() {
   var data = fs.readFileSync(csv)
 	items = await neatCsv( data )
+  console.log( `Read ${ items.length } items` );
 }
 
 /* GET home page. */
