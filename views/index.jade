@@ -7,6 +7,11 @@ block content
   div
     p ID: #{ tokenID } = RANK: #{ rank } (SCORE: #{ score })
 
+  article
+    header #{ tokenID }
+    p RANK: #{ rank }
+    footer SCORE: #{ score }
+
   form(action='/#{ baseUrl }',method='post')
     label(for='tokenID') PK ID
       input(id='tokenID',type='text',value='',placeholder='tokenID',name='tokenID')
