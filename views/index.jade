@@ -2,14 +2,16 @@ extends layout
 
 block content
   h1= title
-  p Welcome to #{title}
+  
+  form( action='/#{ baseUrl }', method='post' )
+    div( class="grid" )
+      input( id='tokenID', type='text', value='', placeholder='Token ID #', name='tokenID' )
+      input( type='submit', value='Get Rank' )
 
   article
-    p ID: #{ tokenID }
-    p RANK: #{ rank }
-    p SCORE: #{ score }
+    div( class="grid" )
+      p ID: #{ tokenID }
+      p RANK: #{ rank }
+      p SCORE: #{ score }
 
-  form(action='/#{ baseUrl }',method='post')
-    label(for='tokenID') PK ID
-      input(id='tokenID',type='text',value='',placeholder='tokenID',name='tokenID')
-    input(type='submit',value='Get Rank')
+  
