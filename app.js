@@ -21,7 +21,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(function(error, req, res, next) {
   console.log( req.baseUrl );
-  next;
+  next();
 });
 
 app.use( `/pkrank`, indexRouter);
