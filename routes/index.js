@@ -31,7 +31,10 @@ router.post( `/${ process.env.BASE_URL }`, post)
 //router.post( `/pkrank`, post);
 
 function get(req,res,next) {
-  res.render('index', { title: 'PK RANK' });
+  res.render('index', { 
+    title: 'PK RANK',
+    baseUrl: process.env.BASE_URL 
+  });
 }
 function post(req,res) {
   console.log(req.body);
