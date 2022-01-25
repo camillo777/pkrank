@@ -2,6 +2,9 @@ extends layout
 
 block content
   h1= title
+
+  p Current Floor: #{ metrics.minSaleListingPriceDecimal } $
+  p Current Total Owners: #{ metrics.owners }
   
   form( action='/#{ baseUrl }', method='post' )
     div( class="grid" )
@@ -10,8 +13,27 @@ block content
 
   article
     div( class="grid" )
-      p ID: #{ tokenID }
-      p RANK: #{ rank }
-      p SCORE: #{ score }
+      div Id: #{ tokenID }
+      div Rank: 
+        b #{ rank }
+      div Score: #{ score }
+      div Likes: #{ assetData.likes }
+      div Views: #{ assetData.views }
 
-  
+  article
+    div( class="grid" )
+      div
+        image( src='#{ assetData.cover.url }' )
+      div 
+        table
+          thead
+            tr
+              th( scope="col" ) traitType
+              th( scope="col" ) value
+              th( scope="col" ) percentage
+          each assetAttribute in assetAttributes
+            tbody
+              tr
+                th( scope="row" ) #{ assetAttribute.traitType }
+                th( scope="row" ) #{ assetAttribute.value }
+                th( scope="row" ) #{ assetAttribute.percentage }

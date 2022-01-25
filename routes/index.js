@@ -11,8 +11,13 @@ var neatCsv = require('neat-csv');
 var fs = require('fs');
 var path = require('path');
 
+const CdcApi = require('../src/cdc-api');
+var cdcApi = new CdcApi();
+
 const csv = './psychokitties.csv'
 var items
+
+const title = 'Psycho Kitties Info'
 
 main();
 
@@ -30,28 +35,37 @@ router.get( `/${ process.env.BASE_URL }`, get);
 router.post( `/${ process.env.BASE_URL }`, post)
 //router.post( `/pkrank`, post);
 
-function get(req,res,next) {
+async function get(req,res,next) {
+  var collectionData = await getCollectionData();
+
   res.setHeader('Surrogate-Control', 'no-store'); 
   res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate'); 
   res.setHeader('Pragma', 'no-cache'); 
   res.setHeader('Expires', '0');
   
   res.render('index', { 
-    title: 'PK RANK',
-    baseUrl: process.env.BASE_URL 
+    title: title,
+    baseUrl: process.env.BASE_URL,
+    metrics: collectionData.metrics
   });
 }
-function post(req,res) {
+async function post(req,res) {
   console.log(req.body);
 
-  var id = req.body.tokenID;
+  var tokenID = req.body.tokenID;
 
-  console.log( id )
+  console.log( tokenID )
 	const item = items.find( el => {
 		//console.log( el )
-		return ( el.ID == id )
+		return ( el.ID == tokenID )
 	})
 	console.log( item );
+
+  var collectionData = await getCollectionData();
+  var searchData = await cdcApi.querySearchAsset( tokenID );
+  var id = searchData.assets[0].id;
+  var assetData = await cdcApi.queryGetAssetByID( id );
+  var assetAttributes = await cdcApi.queryGetAssetAttributes( id );
 
   res.setHeader('Surrogate-Control', 'no-store'); 
   res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate'); 
@@ -59,12 +73,23 @@ function post(req,res) {
   res.setHeader('Expires', '0');
 
   res.render('index', { 
-    title: 'PK RANK', 
+    title: title, 
     tokenID: `${ item.ID }`, 
     rank: `${ item.Rank }`,
     score: `${ item.Score }`,
-    baseUrl: process.env.BASE_URL
+    baseUrl: process.env.BASE_URL,
+    metrics: collectionData.metrics,
+    assetData: assetData.asset,
+    assetAttributes: assetAttributes
   });
 } 
+
+async function getCollectionData() {
+  console.log('---> getCollectionData')
+
+  var data = await cdcApi.queryGetCollection();
+  console.log( data );
+  return data;
+}
 
 module.exports = router;
