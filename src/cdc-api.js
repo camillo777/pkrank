@@ -34,7 +34,7 @@ class CdcApi {
         }
 
         var data = await this.query( getAssetByID );
-        console.log( data );
+        console.log( data.data.public );
         return data.data.public;
     }
 
@@ -81,7 +81,7 @@ class CdcApi {
         }
 
         var data = await this.query( getAssets );
-        console.log( data );
+        console.log( data.data.public );
         return data.data.public;
     }
 
@@ -110,7 +110,7 @@ class CdcApi {
           }
 
         var data = await this.query( getAssetsTotal );
-        console.log( data );
+        console.log( data.data.public );
         return data.data.public;
     }
 
@@ -119,8 +119,8 @@ class CdcApi {
 
         try {
             var response = await axios.post( this.endpoint, body, this.config)
-            console.log( response );
-            console.log( response.data );
+            //console.log( response );
+            //console.log( response.data );
             return response.data;
         }
         catch( error ) {

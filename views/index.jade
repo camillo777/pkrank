@@ -3,37 +3,41 @@ extends layout
 block content
   h1= title
 
-  p Current Floor: #{ metrics.minSaleListingPriceDecimal } $
-  p Current Total Owners: #{ metrics.owners }
+  article
+    div( class="grid" )
+      div Current Floor: #{ metrics.minSaleListingPriceDecimal } $
+      div Current Total Owners: #{ metrics.owners }
+      div Total Sales: #{ totalSales }
   
   form( action='/#{ baseUrl }', method='post' )
     div( class="grid" )
       input( id='tokenID', type='text', value='', placeholder='Token ID #', name='tokenID' )
       input( type='submit', value='Get Rank' )
 
-  article
-    div( class="grid" )
-      div Id: #{ tokenID }
-      div Rank: 
-        b #{ rank }
-      div Score: #{ score }
-      div Likes: #{ assetData.likes }
-      div Views: #{ assetData.views }
+  if tokenID
+    article
+      div( class="grid" )
+        div Id: #{ tokenID }
+        div Rank: 
+          b #{ rank }
+        div Score: #{ score }
+        div Likes: #{ assetData.likes }
+        div Views: #{ assetData.views }
 
-  article
-    div( class="grid" )
-      div
-        image( src='#{ assetData.cover.url }' )
-      div 
-        table
-          thead
-            tr
-              th( scope="col" ) traitType
-              th( scope="col" ) value
-              th( scope="col" ) percentage
-          each assetAttribute in assetAttributes
-            tbody
+    article
+      div( class="grid" )
+        div
+          image( src='#{ assetData.cover.url }' )
+        div 
+          table
+            thead
               tr
-                th( scope="row" ) #{ assetAttribute.traitType }
-                th( scope="row" ) #{ assetAttribute.value }
-                th( scope="row" ) #{ assetAttribute.percentage }
+                th( scope="col" ) traitType
+                th( scope="col" ) value
+                th( scope="col" ) percentage
+            each assetAttribute in assetAttributes
+              tbody
+                tr
+                  th( scope="row" ) #{ assetAttribute.traitType }
+                  th( scope="row" ) #{ assetAttribute.value }
+                  th( scope="row" ) #{ assetAttribute.percentage }

@@ -46,7 +46,8 @@ async function get(req,res,next) {
   res.render('index', { 
     title: title,
     baseUrl: process.env.BASE_URL,
-    metrics: collectionData.metrics
+    metrics: collectionData.metrics,
+    totalSales: numToString( collectionData.metrics.totalSalesDecimal )
   });
 }
 async function post(req,res) {
@@ -80,7 +81,9 @@ async function post(req,res) {
     baseUrl: process.env.BASE_URL,
     metrics: collectionData.metrics,
     assetData: assetData.asset,
-    assetAttributes: assetAttributes
+    assetAttributes: assetAttributes,
+    totalSales: numToString( collectionData.metrics.totalSalesDecimal ),
+    tokenID: tokenID
   });
 } 
 
@@ -90,6 +93,17 @@ async function getCollectionData() {
   var data = await cdcApi.queryGetCollection();
   console.log( data );
   return data;
+}
+
+function numToString (value) {
+  value = Math.floor( value );
+  var suffixes = ["", "K", "M", "B","T"];
+  var suffixNum = Math.floor((""+value).length/3);
+  var shortValue = parseFloat((suffixNum != 0 ? (value / Math.pow(1000,suffixNum)) : value).toPrecision(2));
+  if (shortValue % 1 != 0) {
+      shortValue = shortValue.toFixed(1);
+  }
+  return shortValue+suffixes[suffixNum];
 }
 
 module.exports = router;
