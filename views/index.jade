@@ -2,12 +2,6 @@ extends layout
 
 block content
   h1= title
-
-  article
-    div( class="grid" )
-      div Current Floor: #{ metrics.minSaleListingPriceDecimal } $
-      div Current Total Owners: #{ metrics.owners }
-      div Total Sales: #{ totalSales }
   
   form( action='/#{ baseUrl }', method='post' )
     div( class="grid" )
@@ -15,6 +9,13 @@ block content
       input( type='submit', value='Get Rank' )
 
   if tokenID
+
+    article
+      div( class="grid" )
+        div Current Floor: #{ metrics.minSaleListingPriceDecimal } $
+        div Current Total Owners: #{ metrics.owners }
+        div Total Sales: #{ totalSales }
+        
     article
       div( class="grid" )
         div Id: #{ tokenID }

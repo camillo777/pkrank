@@ -36,7 +36,7 @@ router.post( `/${ process.env.BASE_URL }`, post)
 //router.post( `/pkrank`, post);
 
 async function get(req,res,next) {
-  var collectionData = await getCollectionData();
+  //var collectionData = await getCollectionData();
 
   res.setHeader('Surrogate-Control', 'no-store'); 
   res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate'); 
@@ -46,8 +46,8 @@ async function get(req,res,next) {
   res.render('index', { 
     title: title,
     baseUrl: process.env.BASE_URL,
-    metrics: collectionData.metrics,
-    totalSales: numToString( collectionData.metrics.totalSalesDecimal )
+    //metrics: collectionData.metrics,
+    //totalSales: numToString( collectionData.metrics.totalSalesDecimal )
   });
 }
 async function post(req,res) {
