@@ -24,6 +24,7 @@ class CdcApi {
     }
 
     async queryGetAssetByID( id ) {
+        console.log('queryGetAssetByID',id);
         const getAssetByID = {
             "operationName": "GetAssetById",
             "variables": {
@@ -39,6 +40,7 @@ class CdcApi {
     }
 
     async queryGetAssetAttributes( id ) {
+        console.log('queryGetAssetAttributes',id);
         const getAssetAttributes = {
             "operationName": "getAssetAttributes",
             "variables": {
@@ -58,7 +60,7 @@ class CdcApi {
             "operationName": "GetAssets",
             "variables": {
                 "collectionId": `${ collectionID }`, //"faa3d8da88f9ee2f25267e895db71471",
-                "first": 6,
+                "first": 0, // 6
                 "skip": 0,
                 "cacheId": "getAssetsQuery-88faf3df14bf1367a4d4082ff20bf4c2b4562838",
                 "where": {

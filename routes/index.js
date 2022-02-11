@@ -91,8 +91,20 @@ async function post(req,res) {
 
   var collectionData = await getCollectionData( collection );
   var searchData = await cdcApi.querySearchAsset( tokenID, collection.id );
+  console.log( '>>>>>>>>>> searchData', searchData );
+/*
+  var assetData = {};
+
+  for(var i=0; i<searchData.assets.length; i++) {
+    var asset = searchData.assets[i];
+    console.log( '>>>>>>>>>>>>', asset.id, asset.name );
+    assetData = await cdcApi.queryGetAssetByID( asset.id );
+    if ( assetData.asset.name == asset.name ) break;
+  }
+*/
   var id = searchData.assets[0].id;
   var assetData = await cdcApi.queryGetAssetByID( id );
+  var assetName = assetData.asset.name;
   var assetAttributes = await cdcApi.queryGetAssetAttributes( id );
 
   res.setHeader('Surrogate-Control', 'no-store'); 
@@ -102,7 +114,7 @@ async function post(req,res) {
 
   res.render('index', { 
     title: title, 
-    tokenID: `${ item.ID }`, 
+    tokenID: `${ id }`, 
     rank: `${ item.Rank }`,
     score: `${ item.Score }`,
     baseUrl: process.env.BASE_URL,
@@ -111,7 +123,8 @@ async function post(req,res) {
     assetAttributes: assetAttributes,
     totalSales: numToString( collectionData.metrics.totalSalesDecimal ),
     tokenID: tokenID,
-    collectionName: collectionName
+    collectionName: collectionName,
+    assetName: assetName
   });
 } 
 
