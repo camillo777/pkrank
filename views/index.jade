@@ -8,7 +8,7 @@ block content
       select( name='collectionName' )
         option( selected= collectionName == 'Kitties' ) Kitties
         option( selected= collectionName != 'Kitties' ) Mollies
-      input( id='tokenID', type='text', value='#{ tokenID }', placeholder='Token ID #', name='tokenID' )
+      input( id='tokenID', type='text', value='#{ !tokenID ? "" : tokenID }', placeholder='Token ID #', name='tokenID' )
       input( type='submit', value='Get Rank' )
 
   if tokenID
