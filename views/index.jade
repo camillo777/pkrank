@@ -5,7 +5,10 @@ block content
   
   form( action='/#{ baseUrl }', method='post' )
     div( class="grid" )
-      input( id='tokenID', type='text', value='', placeholder='Token ID #', name='tokenID' )
+      select( name='collectionName' )
+        option( selected= collectionName == 'Kitties' ) Kitties
+        option( selected= collectionName != 'Kitties' ) Mollies
+      input( id='tokenID', type='text', value='#{ tokenID }', placeholder='Token ID #', name='tokenID' )
       input( type='submit', value='Get Rank' )
 
   if tokenID

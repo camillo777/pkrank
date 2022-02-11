@@ -10,12 +10,12 @@ class CdcApi {
 
     
 
-    async queryGetCollection() {
+    async queryGetCollection( collectionID ) {
         console.log('---> queryGetCollection');
         const getCollection = {
             "operationName": "GetCollection",
             "variables": {
-                "collectionId": "faa3d8da88f9ee2f25267e895db71471"
+                "collectionId": `${ collectionID }`
             },
             "query": "query GetCollection($collectionId: ID!) {\n  public {\n    collection(id: $collectionId) {\n      id\n      name\n      description\n      categories\n      banner {\n        url\n        __typename\n      }\n      logo {\n        url\n        __typename\n      }\n      creator {\n        displayName\n        __typename\n      }\n      aggregatedAttributes {\n        label: traitType\n        options: attributes {\n          value: id\n          label: value\n          total\n          __typename\n        }\n        __typename\n      }\n      metrics {\n        items\n        minAuctionListingPriceDecimal\n        minSaleListingPriceDecimal\n        owners\n        totalSalesDecimal\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n}\n"
         }
@@ -52,12 +52,12 @@ class CdcApi {
         return data.data.assetAttributes;
     }
 
-    async querySearchAsset( tokenID ) {
+    async querySearchAsset( tokenID, collectionID ) {
         console.log('querySearchAsset');
         const getAssets = {
             "operationName": "GetAssets",
             "variables": {
-                "collectionId": "faa3d8da88f9ee2f25267e895db71471",
+                "collectionId": `${ collectionID }`, //"faa3d8da88f9ee2f25267e895db71471",
                 "first": 6,
                 "skip": 0,
                 "cacheId": "getAssetsQuery-88faf3df14bf1367a4d4082ff20bf4c2b4562838",
@@ -85,7 +85,7 @@ class CdcApi {
         return data.data.public;
     }
 
-    async queryGetAssetTotal( tokenID ) {
+    async queryGetAssetTotal( tokenID, collectionID ) {
         const getAssetsTotal = {
             "operationName": "GetAssetsTotal",
             "variables": {
@@ -104,7 +104,7 @@ class CdcApi {
                         "field": "createdAt"
                     }
                 ],
-                "collectionId": "faa3d8da88f9ee2f25267e895db71471"
+                "collectionId": `${ collectionID }` //"faa3d8da88f9ee2f25267e895db71471"
             },
             "query": "query GetAssetsTotal($audience: Audience, $brandId: ID, $categories: [ID!], $collectionId: ID, $creatorId: ID, $ownerId: ID, $cacheId: ID, $hasSecondaryListing: Boolean, $where: AssetsSearch, $sort: [SingleFieldSort!], $isCurated: Boolean, $createdPublicView: Boolean) {\n  public(cacheId: $cacheId) {\n    assetsTotal(\n      audience: $audience\n      brandId: $brandId\n      categories: $categories\n      collectionId: $collectionId\n      creatorId: $creatorId\n      ownerId: $ownerId\n      hasSecondaryListing: $hasSecondaryListing\n      where: $where\n      sort: $sort\n      isCurated: $isCurated\n      createdPublicView: $createdPublicView\n    )\n    __typename\n  }\n}\n"
           }

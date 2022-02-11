@@ -11,20 +11,39 @@ var neatCsv = require('neat-csv');
 var fs = require('fs');
 var path = require('path');
 
+var collections = [
+  {
+    name: "Kitties",
+    id: "faa3d8da88f9ee2f25267e895db71471",
+    file: "./data/psychokitties.csv"
+  },
+  {
+    name: "Mollies",
+    id: "69d0601d6d4ecd0ea670835645d47b0d",
+    file: "./data/psychomollies.csv"
+  }
+];
+
 const CdcApi = require('../src/cdc-api');
 var cdcApi = new CdcApi();
 
-const csv = './psychokitties.csv'
+//const csv = './psychokitties.csv'
 var items
 
-const title = 'Psycho Kitties Info'
+const title = 'Psycho Kitties/Mollies Info'
 
 main();
 
 async function main() {
-  var data = fs.readFileSync(csv)
-	items = await neatCsv( data )
-  console.log( `Read ${ items.length } items` );
+
+  collections.forEach( async (collection) => {
+
+    var data = fs.readFileSync( collection.file );
+	  collection.items = await neatCsv( data );
+    console.log( `Read ${ collection.items.length } items` );
+  
+  });
+
 }
 
 console.log( 'process.env.BASE_URL', process.env.BASE_URL );
@@ -51,19 +70,27 @@ async function get(req,res,next) {
   });
 }
 async function post(req,res) {
-  console.log(req.body);
+  console.log( 'body', req.body );
 
   var tokenID = req.body.tokenID;
+  var collectionName = req.body.collectionName;
 
-  console.log( tokenID )
-	const item = items.find( el => {
+  console.log( tokenID, collectionName );
+
+  const collection = collections.find((collection) => {
+
+    return collection.name == collectionName
+
+  });
+
+	const item = collection.items.find( el => {
 		//console.log( el )
 		return ( el.ID == tokenID )
 	})
 	console.log( item );
 
-  var collectionData = await getCollectionData();
-  var searchData = await cdcApi.querySearchAsset( tokenID );
+  var collectionData = await getCollectionData( collection );
+  var searchData = await cdcApi.querySearchAsset( tokenID, collection.id );
   var id = searchData.assets[0].id;
   var assetData = await cdcApi.queryGetAssetByID( id );
   var assetAttributes = await cdcApi.queryGetAssetAttributes( id );
@@ -83,14 +110,15 @@ async function post(req,res) {
     assetData: assetData.asset,
     assetAttributes: assetAttributes,
     totalSales: numToString( collectionData.metrics.totalSalesDecimal ),
-    tokenID: tokenID
+    tokenID: tokenID,
+    collectionName: collectionName
   });
 } 
 
-async function getCollectionData() {
+async function getCollectionData( collection ) {
   console.log('---> getCollectionData')
 
-  var data = await cdcApi.queryGetCollection();
+  var data = await cdcApi.queryGetCollection( collection.id );
   console.log( data );
   return data;
 }
