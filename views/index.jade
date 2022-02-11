@@ -3,9 +3,6 @@ extends layout
 block content
   h1= title
 
-  p Currently there is a bug for IDs lower than 1000, apologize!
-  p CDC API undocumented and sucks!
-  
   form( action='/#{ baseUrl }', method='post' )
     div( class="grid" )
       select( name='collectionName' )
@@ -17,23 +14,32 @@ block content
   if tokenID
 
     article
+      header
+        p Collection data
       div( class="grid" )
         div Current Floor: #{ metrics.minSaleListingPriceDecimal } $
         div Current Total Owners: #{ metrics.owners }
         div Total Sales: #{ totalSales }
         
     article
+      header
+        p Rank data
+      div( class="grid" )
+        div ID: #{ tokenID }
+        div Rank: 
+          b #{ rank }
+        div Score: #{ score }
+      
+    article
+      header
+        p CDC data
+        p Currently there is a bug for IDs lower than 1000, apologize!
       div
         p
           b #{ assetName }
       div( class="grid" )
-        div Rank: 
-          b #{ rank }
-        div Score: #{ score }
         div Likes: #{ assetData.likes }
         div Views: #{ assetData.views }
-
-    article
       div( class="grid" )
         div
           image( src='#{ assetData.cover.url }' )

@@ -114,7 +114,7 @@ async function post(req,res) {
 
   res.render('index', { 
     title: title, 
-    tokenID: `${ id }`, 
+    tokenID: `${ item.ID }`, 
     rank: `${ item.Rank }`,
     score: `${ item.Score }`,
     baseUrl: process.env.BASE_URL,
